@@ -3,12 +3,24 @@ import type { Args, ArgsStoryFn, Renderer } from '@storybook/types'
 import { wrappedTemplate } from './utils'
 import type { VueRenderer } from '@storybook/vue3'
 
+function toKebabCase(inputString: string) {
+  return inputString
+    .replace(/([A-Z])([A-Z])/g, "$1-$2")
+    .replace(/([a-z])([A-Z])/g, "$1-$2")
+    .replace(/[\s_]+/g, "-")
+    .toLowerCase();
+}
+
 export const renderWithSlots = <TRenderer extends Renderer, TArgs extends Record<string, any>>() => {
-  const makeComponentTemplate = (component: string, slots: string, args: Args) => `
-    <${component} ${Object.entries(args).map(([key, value]) => `${key}="${value}"`).join(" ")}>
+  const makeComponentTemplate = (component: string, slots: string, args: Args) => {
+    const kebabComponent = toKebabCase(component)
+
+  return `
+    <${kebabComponent} ${Object.entries(args).map(([key, value]) => `${key}="${value}"`).join(" ")}>
       ${slots}
-    </${component}>
+    </${kebabComponent}>
   ` as const
+  }
 
   return ((args, { viewMode, componentId, component, parameters }) => {
     const componentName = (component as DefineComponent).__name! || (component as { name: string }).name
