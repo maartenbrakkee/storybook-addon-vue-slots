@@ -1,7 +1,8 @@
 'use strict';
 
-var e={};
+// src/index.ts
+var src_default = {};
 
-module.exports = e;
+module.exports = src_default;
 //# sourceMappingURL=out.js.map
 //# sourceMappingURL=index.js.map
