@@ -11,20 +11,12 @@ function toKebabCase(inputString: string) {
     .toLowerCase();
 }
 
-function getArgString(key: string, value: any) {
-  const isObject = typeof value !== 'string' && typeof value !== 'boolean';
-  
-  const valString = isObject ? JSON.stringify(value, null, 2).replace(/"([^"]+)":/g, '$1:').replace(/"/g, "'") : value;
-  
-  return `${isObject ? ':' : ''}${key}="${valString}"`;
-}
-
 export const renderWithSlots = <TRenderer extends Renderer, TArgs extends Record<string, any>>() => {
   const makeComponentTemplate = (component: string, slots: string, args: Args) => {
-    const kebabComponent = toKebabCase(component)
+    const kebabComponent = toKebabCase(component);
 
-  return `
-    <${kebabComponent} ${Object.entries(args).map(([key, value]) => `${getArgString(key, value)}`).join(" ")}>
+    return `
+    <${kebabComponent} ${Object.entries(args).map(([key, value]) => `${typeof value === "string" ? key : ":" + key}="${value}"`).join(" ")}>
       ${slots}
     </${kebabComponent}>
   ` as const
