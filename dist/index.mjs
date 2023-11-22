@@ -1,6 +1,5 @@
-// src/index.ts
-var src_default = {};
+var e={};
 
-export { src_default as default };
+export { e as default };
 //# sourceMappingURL=out.js.map
 //# sourceMappingURL=index.mjs.map
